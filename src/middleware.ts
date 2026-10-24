@@ -5,6 +5,7 @@ const PUBLIC = ["/login", "/signup", "/invite"];
 /** Fast gate on the session cookie; the real session check runs in each page and action. */
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  if (pathname === "/" || pathname.startsWith("/marketing/")) return NextResponse.next();
   if (PUBLIC.some((p) => pathname === p || pathname.startsWith(p + "/"))) return NextResponse.next();
   if (!req.cookies.get("hb_session")) {
     const url = req.nextUrl.clone();

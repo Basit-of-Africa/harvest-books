@@ -1,0 +1,216 @@
+/* Landing page. Light only, scoped to .lp so the app's own theme is untouched.
+   Layout: Hilaq-style marketing flow (centred hero over a large product shot, alternating feature cards,
+   use-case cards, facts, compliance blocks, reasons, FAQ, closing call), set on ruled ledger paper. */
+html:has(.lp), html:has(.lp) body { background: #FFFFFF; color-scheme: light }
+.lp {
+  --bg: #FFFFFF; --tint: #F2F6F1; --tint-2: #E8F0E9; --ink: #13201A; --muted: #56645B; --line: #DFE7E0;
+  --green: #1D5A3E; --green-ink: #FFFFFF; --leaf: #DDEBE1; --stamp: #2F43B5; --stamp-soft: #ECEFFB;
+  --display: "Archivo", "Arial Narrow", system-ui, sans-serif; --body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --wrap: 1200px; --r: 18px;
+  background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; min-height: 100vh;
+}
+.lp *, .lp *::before, .lp *::after { box-sizing: border-box }
+.lp a { color: inherit }
+.lp img { max-width: 100%; height: auto; display: block }
+.lp main { padding: 0; min-width: 0 }
+.lp .wrap { max-width: var(--wrap); margin: 0 auto; gap: 0; flex-direction: row; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); display: block }
+.lp h1, .lp h2, .lp h3 { font-family: var(--display); margin: 0; text-wrap: balance; color: var(--ink) }
+.lp h1 { font-size: clamp(42px, 7vw, 84px); font-weight: 800; font-stretch: 78%; line-height: .98; letter-spacing: -.025em }
+.lp h2 { font-size: clamp(32px, 4.4vw, 54px); font-weight: 780; font-stretch: 80%; line-height: 1.02; letter-spacing: -.02em }
+.lp h3 { font-size: clamp(26px, 3vw, 38px); font-weight: 760; font-stretch: 82%; line-height: 1.05; letter-spacing: -.015em }
+.lp h4 { font-family: var(--display); font-size: 20px; font-weight: 700; font-stretch: 88%; margin: 0 }
+.lp p { margin: 0 }
+.lp .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--green) }
+.lp .eyebrow::before { content: ""; width: 18px; height: 2px; background: currentColor }
+.lp .eyebrow.stamp { color: var(--stamp) }
+.lp .lead { color: var(--muted); font-size: clamp(17px, 1.6vw, 20px); max-width: 60ch }
+.lp .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 600 16px/1 var(--body); padding: 15px 22px; border-radius: 999px; text-decoration: none; border: 1.5px solid transparent; white-space: nowrap; transition: background .15s, border-color .15s, color .15s }
+.lp .btn.primary { background: var(--green); color: var(--green-ink) }
+.lp .btn.primary:hover { background: #164A33 }
+.lp .btn.line { border-color: var(--line); background: #fff; color: var(--ink) }
+.lp .btn.line:hover { border-color: var(--ink) }
+.lp .btn.small { padding: 10px 16px; font-size: 15px }
+.lp .btn:focus-visible, .lp a:focus-visible, .lp summary:focus-visible { outline: 2.5px solid var(--stamp); outline-offset: 3px }
+.lp .text-link { font-weight: 600; color: var(--green); text-decoration: none; border-bottom: 1.5px solid var(--leaf) }
+.lp .text-link:hover { border-bottom-color: var(--green) }
+
+/* nav */
+.lp .topbar { position: sticky; top: 0; z-index: 30; background: rgba(255, 255, 255, .88); backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px) }
+.lp .topbar .wrap { display: flex; flex-direction: row; align-items: center; gap: 28px; height: 70px }
+.lp .mark { white-space: nowrap; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--display); font-weight: 800; font-stretch: 80%; font-size: 23px; letter-spacing: -.01em }
+.lp .mark svg { width: 30px; height: 30px; flex: none }
+.lp .topbar ul { list-style: none; display: flex; gap: 26px; margin: 0; padding: 0; font-size: 15.5px; font-weight: 500 }
+.lp .topbar ul a { text-decoration: none; color: var(--muted) }
+.lp .topbar ul a:hover { color: var(--ink) }
+.lp .topbar .right { margin-left: auto; display: flex; gap: 10px; align-items: center }
+.lp .topbar .signin { text-decoration: none; font-weight: 600; font-size: 15.5px; padding: 10px 6px }
+
+/* hero on ruled ledger paper */
+.lp .hero { position: relative; padding: clamp(56px, 9vw, 104px) 0 0; text-align: center; overflow: hidden }
+.lp .hero::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent calc(50% - 601px), rgba(29, 90, 62, .16) calc(50% - 601px), rgba(29, 90, 62, .16) calc(50% - 599px), transparent calc(50% - 599px)),
+    repeating-linear-gradient(180deg, transparent 0 39px, rgba(29, 90, 62, .085) 39px 40px);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 45%, transparent 85%); mask-image: linear-gradient(180deg, #000 0%, #000 45%, transparent 85%);
+}
+.lp .hero > .wrap { position: relative; z-index: 1 }
+.lp .hero h1 { max-width: 15ch; margin: 18px auto 0 }
+.lp .hero .lead { margin: 22px auto 0; max-width: 58ch }
+.lp .hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 34px }
+.lp .hero .note { margin-top: 16px; font-size: 14px; color: var(--muted) }
+.lp .pill { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px 7px 8px; border-radius: 999px; background: var(--stamp-soft); color: var(--stamp); font-size: 14.5px; font-weight: 600; text-decoration: none }
+.lp .pill b { background: var(--stamp); color: #fff; border-radius: 999px; padding: 3px 9px; font-size: 12.5px }
+.lp .stage { position: relative; margin: clamp(48px, 7vw, 76px) auto 0; max-width: 1120px }
+.lp .frame { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 0 rgba(19, 32, 26, .03), 0 40px 80px -40px rgba(19, 50, 32, .35) }
+.lp .frame .bar { height: 34px; display: flex; align-items: center; gap: 7px; padding: 0 14px; border-bottom: 1px solid var(--line); background: #FAFCFA }
+.lp .frame .bar i { width: 10px; height: 10px; border-radius: 50%; background: #DCE3DD }
+.lp .frame img { width: 100%; height: auto }
+.lp .hero .frame { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: 0 }
+.lp .seal-float { position: absolute; right: -28px; bottom: 56px; width: min(360px, 42%); border-radius: 10px; box-shadow: 0 24px 50px -20px rgba(47, 67, 181, .45); background: #fff; transform: rotate(-2.5deg); animation: stamp-in .7s cubic-bezier(.2, 1.3, .4, 1) .35s both }
+@keyframes stamp-in { from { opacity: 0; transform: rotate(-9deg) scale(1.25) } to { opacity: 1; transform: rotate(-2.5deg) scale(1) } }
+
+/* sections */
+.lp section { padding: clamp(72px, 10vw, 120px) 0 }
+.lp section.tint { background: var(--tint) }
+.lp .sec-head { display: flex; flex-direction: column; gap: 16px; max-width: 760px }
+.lp .sec-head.center { align-items: center; text-align: center; margin: 0 auto }
+.lp .sec-head .lead { margin-top: 2px }
+.lp .suite { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 64px); align-items: center }
+.lp .suite .sec-head .btn { align-self: flex-start; margin-top: 10px }
+.lp .books-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px }
+.lp .books-list span { font-size: 14px; font-weight: 600; padding: 7px 12px; border-radius: 999px; background: #fff; border: 1px solid var(--line) }
+
+/* feature cards */
+.lp .features { display: flex; flex-direction: column; gap: 28px; margin-top: clamp(40px, 6vw, 64px) }
+.lp .feature { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); background: var(--tint); border-radius: 26px; overflow: hidden; min-height: 460px; scroll-margin-top: 90px }
+.lp .feature.flip { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr) }
+.lp .feature.flip .copy { order: 2 }
+.lp .feature .copy { padding: clamp(28px, 4.5vw, 56px); display: flex; flex-direction: column; gap: 16px; justify-content: center }
+.lp .feature .copy p { color: var(--muted) }
+.lp .feature ul { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 15.5px }
+.lp .feature li { display: flex; gap: 10px; align-items: flex-start }
+.lp .feature li::before { content: ""; flex: none; width: 18px; height: 18px; margin-top: 3px; border-radius: 50%; background: var(--leaf) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%231D5A3E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat }
+.lp .feature .copy .btn { align-self: flex-start; margin-top: 8px }
+.lp .feature .shot { position: relative; padding: clamp(28px, 4vw, 48px) 0 0 clamp(20px, 3vw, 40px); display: flex; align-items: flex-end; min-width: 0 }
+.lp .feature.flip .shot { padding: clamp(28px, 4vw, 48px) clamp(20px, 3vw, 40px) 0 0; justify-content: flex-end }
+.lp .feature .shot .frame { width: 100%; border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: 0 }
+.lp .feature:not(.flip) .shot .frame { border-top-right-radius: 0; border-right: 0 }
+.lp .feature.flip .shot .frame { border-top-left-radius: 0; border-left: 0 }
+.lp .feature .shot img { aspect-ratio: 16 / 10.4; object-fit: cover; object-position: left top }
+.lp .feature.nrs { background: var(--stamp-soft) }
+.lp .feature.nrs li::before { background-color: #DCE1F8; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%232F43B5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") }
+.lp .feature.nrs .btn.primary { background: var(--stamp) }
+
+/* quote from the workbook */
+.lp .quote { text-align: center; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; align-items: center }
+.lp .quote blockquote { margin: 0; font-family: var(--display); font-weight: 650; font-stretch: 86%; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.18; letter-spacing: -.01em; text-wrap: balance }
+.lp .quote cite { font-style: normal; color: var(--muted); font-size: 15px }
+.lp .quote cite b { color: var(--ink) }
+
+/* use cases */
+.lp .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: clamp(36px, 5vw, 56px) }
+.lp .card { background: #fff; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: border-color .15s, transform .15s }
+.lp .card:hover { border-color: var(--green); transform: translateY(-2px) }
+.lp .card .pic { background: var(--tint); padding: 22px 0 0 22px; height: 210px; overflow: hidden }
+.lp .card .pic img { border-radius: 10px 0 0 0; border: 1px solid var(--line); border-right: 0; border-bottom: 0; width: 150%; max-width: none }
+.lp .card .body { padding: 22px 24px 26px; display: flex; flex-direction: column; gap: 10px; flex: 1 }
+.lp .card .aud { font-size: 14px; font-weight: 600; color: var(--green) }
+.lp .card p { color: var(--muted); font-size: 15.5px }
+.lp .card .more { margin-top: auto; padding-top: 8px; font-weight: 600; font-size: 15px; color: var(--green) }
+
+/* facts */
+.lp .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: clamp(36px, 5vw, 56px); border-top: 1.5px solid var(--ink) }
+.lp .fact { padding: 26px 24px 0 0; display: flex; flex-direction: column; gap: 8px }
+.lp .fact + .fact { padding-left: 24px; border-left: 1px solid var(--line) }
+.lp .fact .n { font-family: var(--display); font-weight: 800; font-stretch: 75%; font-size: clamp(52px, 6vw, 76px); line-height: .9; letter-spacing: -.03em; color: var(--green); font-variant-numeric: tabular-nums }
+.lp .fact b { font-size: 17px }
+.lp .fact span { color: var(--muted); font-size: 15px }
+
+/* compliance */
+.lp .comply { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 5vw, 72px); align-items: start }
+.lp .comply .paper { position: sticky; top: 100px }
+.lp .comply .paper img { border-radius: 8px; border: 1px solid var(--line); box-shadow: 0 30px 60px -36px rgba(19, 50, 32, .4) }
+.lp .rules { display: flex; flex-direction: column; margin-top: 32px; border-top: 1px solid var(--line) }
+.lp .rule { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px; padding: 22px 0; border-bottom: 1px solid var(--line) }
+.lp .rule .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--stamp-soft); color: var(--stamp); display: grid; place-items: center }
+.lp .rule .ic svg { width: 22px; height: 22px }
+.lp .rule p { color: var(--muted); font-size: 15.5px; margin-top: 4px }
+
+/* reasons */
+.lp .reasons { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px; margin-top: clamp(36px, 5vw, 56px) }
+.lp .reason { grid-column: span 2; background: #fff; border: 1px solid var(--line); border-radius: var(--r); padding: 28px; display: flex; flex-direction: column; gap: 10px }
+.lp .reason.wide { grid-column: span 3 }
+.lp .reason p { color: var(--muted); font-size: 15.5px }
+.lp .reason.lead-card { background: var(--green); border-color: var(--green); color: #fff }
+.lp .reason.lead-card h4, .lp .reason.lead-card p { color: #fff }
+.lp .reason.lead-card p { opacity: .85 }
+.lp .reason.lead-card .btn { align-self: flex-start; margin-top: auto; background: #fff; color: var(--green) }
+.lp .tag { font-size: 13px; font-weight: 600; color: var(--green); background: var(--leaf); align-self: flex-start; padding: 4px 10px; border-radius: 999px }
+
+/* faq */
+.lp .faq { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 72px); align-items: start }
+.lp .faq .sec-head { position: sticky; top: 100px }
+.lp details { border-bottom: 1px solid var(--line) }
+.lp details:first-child { border-top: 1px solid var(--line) }
+.lp summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; align-items: center; padding: 22px 0; font-family: var(--display); font-weight: 700; font-stretch: 88%; font-size: 20px }
+.lp summary::-webkit-details-marker { display: none }
+.lp summary::after { content: ""; flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--tint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 3v10M3 8h10' fill='none' stroke='%2313201A' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/13px no-repeat; transition: transform .2s }
+.lp details[open] summary::after { transform: rotate(45deg) }
+.lp details .ans { padding: 0 48px 24px 0; color: var(--muted); display: flex; flex-direction: column; gap: 10px; font-size: 16px }
+
+/* closing */
+.lp .closing { background: var(--green); color: #fff; border-radius: 30px; padding: clamp(48px, 7vw, 88px) clamp(24px, 5vw, 64px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; position: relative; overflow: hidden }
+.lp .closing::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(180deg, transparent 0 39px, rgba(255, 255, 255, .07) 39px 40px); pointer-events: none }
+.lp .closing > * { position: relative }
+.lp .closing h2 { color: #fff; max-width: 16ch }
+.lp .closing p { opacity: .85; max-width: 52ch }
+.lp .closing .btn.primary { background: #fff; color: var(--green) }
+.lp .closing .btn.line { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .45) }
+.lp .closing .btn.line:hover { border-color: #fff }
+
+/* footer */
+.lp footer { padding: 64px 0 calc(40px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); margin-top: clamp(72px, 10vw, 120px) }
+.lp footer .cols { display: grid; grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr)); gap: 32px }
+.lp footer h5 { margin: 0 0 14px; font-size: 14px; font-weight: 600; color: var(--muted) }
+.lp footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 15.5px }
+.lp footer ul a { text-decoration: none }
+.lp footer ul a:hover { color: var(--green) }
+.lp footer .about p { color: var(--muted); font-size: 15px; margin-top: 14px; max-width: 36ch }
+.lp footer .base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted) }
+
+@media (max-width: 1000px) {
+  .lp .topbar ul { display: none }
+  .lp .suite, .lp .comply, .lp .faq { grid-template-columns: minmax(0, 1fr) }
+  .lp .comply .paper, .lp .faq .sec-head { position: static }
+  .lp .feature, .lp .feature.flip { grid-template-columns: minmax(0, 1fr); min-height: 0 }
+  .lp .feature.flip .copy { order: 0 }
+  .lp .feature .shot, .lp .feature.flip .shot { padding: 0 0 0 clamp(20px, 4vw, 40px); justify-content: flex-start }
+  .lp .feature.flip .shot .frame { border-top-left-radius: 16px; border-left: 1px solid var(--line); border-top-right-radius: 0; border-right: 0 }
+  .lp .cards { grid-template-columns: minmax(0, 1fr) }
+  .lp .facts { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .lp .fact:nth-child(3) { padding-left: 0; border-left: 0 }
+  .lp .fact { padding-bottom: 26px }
+  .lp .reasons { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .lp .reason, .lp .reason.wide { grid-column: span 1 }
+  .lp .reason.lead-card { grid-column: span 2 }
+  .lp footer .cols { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .lp footer .about { grid-column: span 2 }
+  .lp .seal-float { right: 12px; bottom: 24px; width: 46% }
+}
+@media (max-width: 560px) {
+  .lp { font-size: 16px }
+  .lp .topbar .signin { display: none }
+  .lp .hero .ctas .btn { width: 100% }
+  .lp .facts { grid-template-columns: minmax(0, 1fr) }
+  .lp .fact + .fact { padding-left: 0; border-left: 0; border-top: 1px solid var(--line) }
+  .lp .reasons { grid-template-columns: minmax(0, 1fr) }
+  .lp .reason.lead-card { grid-column: span 1 }
+  .lp .seal-float { position: relative; right: auto; bottom: auto; width: 88%; margin: -64px auto 0; z-index: 2 }
+  .lp .mark { font-size: 20px }
+  .lp details .ans { padding-right: 0 }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lp .seal-float { animation: none }
+  .lp .card, .lp .btn { transition: none }
+}

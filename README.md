@@ -15,6 +15,10 @@ Bookkeeping and NRS e-invoicing for Nigerian agribusinesses. Built on the *Simpl
 | **Invoice PDF and email** | Branded A4 PDF with the NRS seal (QR code, IRN, CSID), emailed to the customer over SMTP. |
 | **Logins and roles** | Email and password accounts. Several businesses per person. Owner, accountant and viewer roles. Invitations by link or email. |
 
+## Website
+
+The home page (`/`) is the public website: product tour, e-invoicing, who it's for, FAQ and sign-up. It is light-only and lives in `src/app/page.tsx` with its styles in `src/app/landing.css`. Its screenshots in `public/marketing/` are captures of the real app running on the demo data. Retake them after interface changes so the site stays accurate.
+
 ## Run it locally
 
 Needs Node 20+ and a Postgres database (a free Neon project works, or local Postgres).
