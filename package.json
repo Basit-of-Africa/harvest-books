@@ -1,5 +1,5 @@
 {
-  "name": "harvest-books",
+  "name": "farmtrace",
   "version": "1.0.0",
   "private": true,
   "description": "Bookkeeping and NRS e-invoicing for Nigerian agribusinesses",
@@ -11,11 +11,14 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx scripts/migrate.ts",
     "db:seed": "tsx scripts/seed.ts",
-    "test": "tsx --test tests/*.test.ts"
+    "test": "tsx --conditions=react-server --test tests/*.test.ts",
+    "db:purge": "tsx --conditions=react-server scripts/purge.ts"
   },
   "dependencies": {
+    "@fontsource-variable/montserrat": "5.2.8",
     "bcryptjs": "3.0.3",
     "drizzle-orm": "0.44.7",
+    "lucide-react": "0.546.0",
     "next": "15.5.28",
     "nodemailer": "7.0.6",
     "pdf-lib": "1.17.1",

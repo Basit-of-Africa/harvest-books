@@ -1,3 +1,4 @@
+import { Activity, ArrowDownLeft, ArrowUpRight, HandCoins, Landmark, ShoppingCart, Sprout, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { and, asc, eq, isNull, lt, sql } from "drizzle-orm";
 import { db, schema } from "@/db";
@@ -52,8 +53,8 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
   const W = 720, H = 230, L = 56, B = 26, T = 12, cw = (W - L - 8) / 12, bw = Math.min(16, cw / 3);
   const y = (v: number) => T + (H - T - B) * (1 - v / max);
   const year = (to || today).slice(0, 4);
-  const Fig = ({ k, v, s, lead }: { k: string; v: number; s?: string; lead?: boolean }) => (
-    <div className={`fig${lead ? " lead" : ""}`}><span className="k">{k}</span><span className={`v${!lead && v < 0 ? " neg" : ""}`}>{money(v)}</span>{s && <span className="s">{s}</span>}</div>
+  const Fig = ({ k, v, s, lead, icon, gold }: { k: string; v: number; s?: string; lead?: boolean; icon: React.ReactNode; gold?: boolean }) => (
+    <div className={`fig${lead ? " lead" : ""}`}><span className={`ico${gold ? " gold" : ""}`} aria-hidden="true">{icon}</span><span className="k">{k}</span><span className={`v${!lead && v < 0 ? " neg" : ""}`}>{money(v)}</span>{s && <span className="s">{s}</span>}</div>
   );
 
   return (
@@ -70,27 +71,27 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
       </form>
 
       <div className="figs">
-        <Fig lead k="Cash at bank and in hand" v={j.cash} s={`Petty cash ${money(j.petty)}`} />
-        <Fig k="Total sales" v={t.sales} s="Sales book, before VAT" />
-        <Fig k="Total purchases" v={t.purchases} s="Purchases book" />
-        <Fig k="Gross margin" v={t.grossMargin} s="Sales less purchases" />
-        <Fig k="Total cash in" v={t.cashIn} s="Cash book" />
-        <Fig k="Total cash out" v={t.cashOut} s="Cash book" />
-        <Fig k="Net cash flow" v={t.netCash} s="Cash in less cash out" />
-        <Fig k="Profit for the period" v={j.profit} s={`Payroll ${money(t.payroll)}, petty cash ${money(t.petty)}`} />
+        <Fig lead icon={<Landmark />} k="Cash at bank and in hand" v={j.cash} s={`Petty cash ${money(j.petty)}`} />
+        <Fig icon={<HandCoins />} k="Total sales" v={t.sales} s="Sales book, before VAT" />
+        <Fig icon={<ShoppingCart />} gold k="Total purchases" v={t.purchases} s="Purchases book" />
+        <Fig icon={<Sprout />} k="Gross margin" v={t.grossMargin} s="Sales less purchases" />
+        <Fig icon={<ArrowDownLeft />} k="Total cash in" v={t.cashIn} s="Cash book" />
+        <Fig icon={<ArrowUpRight />} gold k="Total cash out" v={t.cashOut} s="Cash book" />
+        <Fig icon={<Activity />} k="Net cash flow" v={t.netCash} s="Cash in less cash out" />
+        <Fig icon={<TrendingUp />} gold k="Profit for the period" v={j.profit} s={`Payroll ${money(t.payroll)}, petty cash ${money(t.petty)}`} />
       </div>
 
       <div className="cols">
         <section className="panel">
-          <div className="panel-h"><h2>Cash in and out by month, {year}</h2><div className="legend"><span><i style={{ background: "var(--ledger)" }} />Money in</span><span><i style={{ background: "var(--muted)" }} />Money out</span></div></div>
+          <div className="panel-h"><h2>Cash in and out by month, {year}</h2><div className="legend"><span><i style={{ background: "var(--ledger-2)" }} />Money in</span><span><i style={{ background: "var(--gold)" }} />Money out</span></div></div>
           <div className="chart">
             <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Cash in and out by month for ${year}`}>
               {[0, max / 2, max].map((v, i) => (<g key={i}><line x1={L} x2={W - 8} y1={y(v)} y2={y(v)} stroke="var(--rule)" /><text x={L - 8} y={y(v) + 4} textAnchor="end" fontSize="11" fill="var(--muted)">{compactMoney(v)}</text></g>))}
               {MONTHS.map((mn, i) => {
                 const cx = L + cw * i + cw / 2;
                 return (<g key={mn}>
-                  <rect x={cx - bw - 1} y={y(chart.ins[i])} width={bw} height={Math.max(0, H - B - y(chart.ins[i]))} rx="2" fill="var(--ledger)"><title>{`${mn} in ${money(chart.ins[i])}`}</title></rect>
-                  <rect x={cx + 1} y={y(chart.outs[i])} width={bw} height={Math.max(0, H - B - y(chart.outs[i]))} rx="2" fill="var(--muted)"><title>{`${mn} out ${money(chart.outs[i])}`}</title></rect>
+                  <rect x={cx - bw - 1} y={y(chart.ins[i])} width={bw} height={Math.max(0, H - B - y(chart.ins[i]))} rx="3" fill="var(--ledger-2)"><title>{`${mn} in ${money(chart.ins[i])}`}</title></rect>
+                  <rect x={cx + 1} y={y(chart.outs[i])} width={bw} height={Math.max(0, H - B - y(chart.outs[i]))} rx="3" fill="var(--gold)"><title>{`${mn} out ${money(chart.outs[i])}`}</title></rect>
                   <text x={cx} y={H - 8} textAnchor="middle" fontSize="11" fill="var(--muted)">{mn}</text></g>);
               })}
             </svg>

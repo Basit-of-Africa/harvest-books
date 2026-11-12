@@ -1,4 +1,4 @@
-# Harvest Books
+# FarmTrace
 
 Bookkeeping and NRS e-invoicing for Nigerian agribusinesses. Built on the *Simple Bookkeeping Pack* workbook (`docs/Bookkeeping_Pack.xlsx`): its nine books and monthly summary, with a double-entry journal underneath and an e-invoicing module that validates, signs and transmits invoices through the Nigeria Revenue Service (NRS).
 
@@ -14,6 +14,12 @@ Bookkeeping and NRS e-invoicing for Nigerian agribusinesses. Built on the *Simpl
 | **NRS e-invoicing** | B2B, B2G and B2C invoices, credit notes and debit notes. Required-field checks, IRN generation, the NRS JSON payload, validation and signing through a pluggable provider, transmission, payment-status updates, a call log, and posting into the books. |
 | **Invoice PDF and email** | Branded A4 PDF with the NRS seal (QR code, IRN, CSID), emailed to the customer over SMTP. |
 | **Logins and roles** | Email and password accounts. Several businesses per person. Owner, accountant and viewer roles. Invitations by link or email. |
+| **Security** | Rate-limited sign-in with lockout, 12-character password policy, `__Host-` session cookies with idle and absolute timeouts, remote sign-out, a nonce-based Content Security Policy and other security headers, SSRF guard on NRS URLs, CSV formula-injection protection, and an audit log. |
+| **Privacy** | Built for the Nigeria Data Protection Act 2023 and the GDPR: Privacy Policy, Terms with data processing terms, a cookie notice (essential cookies only), consent recorded per policy version, self-service data download, account and business deletion, and automatic retention clean-up. |
+
+## Look and feel
+
+The interface follows the Farms Portal design: a dark forest-green gradient sidebar with icons and a user card, a "welcome back" header card, cream paper background, Montserrat (self-hosted, so no Google Fonts requests), rounded white cards with soft shadows, emerald and harvest-gold accents, and a light/dark switch. On phones the sidebar becomes a drawer opened from a green top bar. The theme lives in `src/app/globals.css`, the shell in `src/components/AppShell.tsx`, and the product name and contact details in `src/lib/brand.ts`.
 
 ## Website
 
@@ -31,7 +37,7 @@ npm run db:seed                 # optional: demo business with the workbook's ex
 npm run dev                     # http://localhost:3000
 ```
 
-The seed signs you in as `demo@harvestbooks.ng` with password `harvest-demo-2026`. You can change both with `SEED_EMAIL` and `SEED_PASSWORD`. Example rows are marked "Example".
+The seed signs you in as `demo@farmtrace.ng` with password `farmtrace-demo-2026`. You can change both with `SEED_EMAIL` and `SEED_PASSWORD`. Example rows are marked "Example".
 
 ```bash
 npm test          # unit tests; add DATABASE_URL to also run the posting test against a disposable database
@@ -47,7 +53,17 @@ npm run typecheck
    - `ENCRYPTION_KEY`: from `openssl rand -base64 32`. Keep a copy. Changing it makes saved NRS credentials unreadable.
    - `APP_URL`: the deployed address, used in invitation links.
    - `SMTP_*` and `MAIL_FROM`: optional, for emailing invoices and invitations.
+   - `CRON_SECRET`: a long random string. Vercel Cron sends it to `/api/cron/purge` daily (see `vercel.json`) to delete data past its retention period.
+   - `LEGAL_ENTITY`, `LEGAL_ADDRESS`, `PRIVACY_EMAIL`, `SUPPORT_EMAIL`, `DATA_REGION` and, once registered, `NDPC_REGISTRATION`: shown in the Privacy Policy and Terms.
 4. Deploy, open the site and create your account. The first account becomes the owner of the business it creates.
+
+## Security and privacy
+
+See [`docs/SECURITY-AND-PRIVACY.md`](docs/SECURITY-AND-PRIVACY.md) for the controls in the code, how they map to the NDPA 2023 and GDPR, and the **operator checklist**: what you, as the business running FarmTrace, still need to do (NDPC registration, a Data Protection Officer, DPAs with Vercel and Neon, and so on).
+
+```bash
+npm run db:purge   # delete expired sessions, old sign-in attempts, stale invitations and old audit entries
+```
 
 ## Connecting to NRS
 
@@ -98,8 +114,16 @@ Posting is idempotent: editing an entry rewrites its journal entry and anything 
 ## Project layout
 
 ```
-src/app/(auth)        sign in, sign up, invitations, onboarding
-src/app/(app)         dashboard, books/[book], invoices, accounts, settings, team
+src/app/(auth)        sign in, sign up, invitations, onboarding, updated-terms consent
+src/app/(app)         dashboard, books/[book], invoices, accounts, settings, team, account (privacy and security)
+src/app/(legal)       privacy policy and terms of service
+src/app/api/cron      daily retention clean-up
+src/middleware.ts     Content Security Policy (per-request nonce) and the sign-in gate
+src/lib/auth.ts       sessions, roles
+src/lib/security.ts   rate limits, password policy, audit log, safe error messages
+src/lib/privacy.ts    data export, account and business deletion, retention
+src/lib/net.ts        SSRF guard for outbound NRS calls
+src/components/AppShell.tsx  sidebar, header and mobile drawer
 src/lib/posting.ts    double-entry rules
 src/lib/books.ts      book definitions and workbook formulas
 src/lib/nrs/core.ts   totals, IRN, validation, NRS payload (shared by browser and server)

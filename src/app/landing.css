@@ -1,44 +1,48 @@
-/* Landing page. Light only, scoped to .lp so the app's own theme is untouched.
-   Layout: Hilaq-style marketing flow (centred hero over a large product shot, alternating feature cards,
-   use-case cards, facts, compliance blocks, reasons, FAQ, closing call), set on ruled ledger paper. */
-html:has(.lp), html:has(.lp) body { background: #FFFFFF; color-scheme: light }
+/* FarmTrace public website. Light only, scoped to .lp so the app's own theme is untouched.
+   Layout: centred hero on a dark forest-green field over a large product shot, alternating feature cards,
+   use-case cards, facts, compliance blocks, reasons, FAQ, closing call. Palette and type follow the Farms Portal look. */
+html:has(.lp), html:has(.lp) body { background: #FBF9F4; color-scheme: light }
 .lp {
-  --bg: #FFFFFF; --tint: #F2F6F1; --tint-2: #E8F0E9; --ink: #13201A; --muted: #56645B; --line: #DFE7E0;
-  --green: #1D5A3E; --green-ink: #FFFFFF; --leaf: #DDEBE1; --stamp: #2F43B5; --stamp-soft: #ECEFFB;
-  --display: "Archivo", "Arial Narrow", system-ui, sans-serif; --body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bg: #FBF9F4; --tint: #F3EFE4; --tint-2: #EAE4D4; --ink: #2C3E35; --muted: #5F6E65; --line: #E6E1D3;
+  --green: #1B4332; --green-2: #2D6A4F; --green-ink: #FFFFFF; --leaf: #E3F1E8; --emerald: #52B788; --gold: #D4A017;
+  --stamp: #2F43B5; --stamp-soft: #ECEFFB; --dark-1: #0F291E; --dark-2: #143427; --dark-3: #0E251B;
+  --display: "Montserrat Variable", "Montserrat", system-ui, sans-serif; --body: "Montserrat Variable", "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
   --wrap: 1200px; --r: 18px;
-  background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; min-height: 100vh;
+  background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16.5px; line-height: 1.6; min-height: 100vh;
 }
 .lp *, .lp *::before, .lp *::after { box-sizing: border-box }
 .lp a { color: inherit }
 .lp img { max-width: 100%; height: auto; display: block }
-.lp main { padding: 0; min-width: 0 }
+.lp main { padding: 0; min-width: 0; max-width: none; margin: 0; display: block }
 .lp .wrap { max-width: var(--wrap); margin: 0 auto; gap: 0; flex-direction: row; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); display: block }
-.lp h1, .lp h2, .lp h3 { font-family: var(--display); margin: 0; text-wrap: balance; color: var(--ink) }
-.lp h1 { font-size: clamp(42px, 7vw, 84px); font-weight: 800; font-stretch: 78%; line-height: .98; letter-spacing: -.025em }
-.lp h2 { font-size: clamp(32px, 4.4vw, 54px); font-weight: 780; font-stretch: 80%; line-height: 1.02; letter-spacing: -.02em }
-.lp h3 { font-size: clamp(26px, 3vw, 38px); font-weight: 760; font-stretch: 82%; line-height: 1.05; letter-spacing: -.015em }
-.lp h4 { font-family: var(--display); font-size: 20px; font-weight: 700; font-stretch: 88%; margin: 0 }
+.lp h1, .lp h2, .lp h3 { font-family: var(--display); margin: 0; text-wrap: balance; color: var(--green) }
+.lp h1 { font-size: clamp(38px, 6vw, 72px); font-weight: 800; line-height: 1.04; letter-spacing: -.03em }
+.lp h2 { font-size: clamp(30px, 3.8vw, 46px); font-weight: 800; line-height: 1.1; letter-spacing: -.025em }
+.lp h3 { font-size: clamp(24px, 2.6vw, 32px); font-weight: 800; line-height: 1.15; letter-spacing: -.02em }
+.lp h4 { font-family: var(--display); font-size: 18px; font-weight: 700; margin: 0; color: var(--green) }
 .lp p { margin: 0 }
-.lp .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--green) }
+.lp .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--green-2) }
 .lp .eyebrow::before { content: ""; width: 18px; height: 2px; background: currentColor }
 .lp .eyebrow.stamp { color: var(--stamp) }
 .lp .lead { color: var(--muted); font-size: clamp(17px, 1.6vw, 20px); max-width: 60ch }
-.lp .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 600 16px/1 var(--body); padding: 15px 22px; border-radius: 999px; text-decoration: none; border: 1.5px solid transparent; white-space: nowrap; transition: background .15s, border-color .15s, color .15s }
+.lp .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 700 15px/1 var(--body); padding: 15px 22px; border-radius: 12px; text-decoration: none; border: 1.5px solid transparent; white-space: nowrap; transition: background .15s, border-color .15s, color .15s }
 .lp .btn.primary { background: var(--green); color: var(--green-ink) }
-.lp .btn.primary:hover { background: #164A33 }
+.lp .btn.primary:hover { background: var(--green-2) }
+.lp .btn.gold { background: linear-gradient(90deg, #D4A017, #F59E0B); color: #0F291E }
+.lp .btn.gold:hover { background: linear-gradient(90deg, #E5B128, #D97706) }
 .lp .btn.line { border-color: var(--line); background: #fff; color: var(--ink) }
 .lp .btn.line:hover { border-color: var(--ink) }
 .lp .btn.small { padding: 10px 16px; font-size: 15px }
-.lp .btn:focus-visible, .lp a:focus-visible, .lp summary:focus-visible { outline: 2.5px solid var(--stamp); outline-offset: 3px }
+.lp .btn:focus-visible, .lp a:focus-visible, .lp summary:focus-visible { outline: 2.5px solid var(--emerald); outline-offset: 3px }
 .lp .text-link { font-weight: 600; color: var(--green); text-decoration: none; border-bottom: 1.5px solid var(--leaf) }
 .lp .text-link:hover { border-bottom-color: var(--green) }
 
 /* nav */
-.lp .topbar { position: sticky; top: 0; z-index: 30; background: rgba(255, 255, 255, .88); backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px) }
+.lp .topbar { position: sticky; top: 0; z-index: 30; background: rgba(251, 249, 244, .9); backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px) }
 .lp .topbar .wrap { display: flex; flex-direction: row; align-items: center; gap: 28px; height: 70px }
-.lp .mark { white-space: nowrap; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--display); font-weight: 800; font-stretch: 80%; font-size: 23px; letter-spacing: -.01em }
-.lp .mark svg { width: 30px; height: 30px; flex: none }
+.lp .mark { white-space: nowrap; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 21px; letter-spacing: .01em; color: var(--green) }
+.lp .mark .logo { width: 38px; height: 38px; flex: none; display: grid; place-items: center; border-radius: 12px; background: linear-gradient(160deg, var(--dark-2), var(--dark-3)); color: var(--emerald) }
+.lp .mark .logo svg { width: 21px; height: 21px }
 .lp .topbar ul { list-style: none; display: flex; gap: 26px; margin: 0; padding: 0; font-size: 15.5px; font-weight: 500 }
 .lp .topbar ul a { text-decoration: none; color: var(--muted) }
 .lp .topbar ul a:hover { color: var(--ink) }
@@ -46,25 +50,29 @@ html:has(.lp), html:has(.lp) body { background: #FFFFFF; color-scheme: light }
 .lp .topbar .signin { text-decoration: none; font-weight: 600; font-size: 15.5px; padding: 10px 6px }
 
 /* hero on ruled ledger paper */
-.lp .hero { position: relative; padding: clamp(56px, 9vw, 104px) 0 0; text-align: center; overflow: hidden }
+.lp .hero { position: relative; padding: clamp(56px, 9vw, 104px) 0 0; text-align: center; overflow: hidden; background: linear-gradient(180deg, var(--dark-1), var(--dark-2) 55%, var(--dark-3) 78%, var(--bg) 78%) }
 .lp .hero::before {
   content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background:
-    linear-gradient(90deg, transparent calc(50% - 601px), rgba(29, 90, 62, .16) calc(50% - 601px), rgba(29, 90, 62, .16) calc(50% - 599px), transparent calc(50% - 599px)),
-    repeating-linear-gradient(180deg, transparent 0 39px, rgba(29, 90, 62, .085) 39px 40px);
+    radial-gradient(60% 50% at 50% 0%, rgba(82, 183, 136, .18), transparent 70%),
+    repeating-linear-gradient(180deg, transparent 0 39px, rgba(82, 183, 136, .06) 39px 40px);
   -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 45%, transparent 85%); mask-image: linear-gradient(180deg, #000 0%, #000 45%, transparent 85%);
 }
 .lp .hero > .wrap { position: relative; z-index: 1 }
-.lp .hero h1 { max-width: 15ch; margin: 18px auto 0 }
-.lp .hero .lead { margin: 22px auto 0; max-width: 58ch }
+.lp .hero h1 { max-width: 16ch; margin: 20px auto 0; color: #fff }
+.lp .hero h1 em { font-style: normal; color: var(--emerald) }
+.lp .hero .lead { margin: 22px auto 0; max-width: 58ch; color: rgba(255, 255, 255, .78) }
+.lp .hero .btn.line { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .3) }
+.lp .hero .btn.line:hover { border-color: #fff }
 .lp .hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 34px }
 .lp .hero .note { margin-top: 16px; font-size: 14px; color: var(--muted) }
-.lp .pill { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px 7px 8px; border-radius: 999px; background: var(--stamp-soft); color: var(--stamp); font-size: 14.5px; font-weight: 600; text-decoration: none }
-.lp .pill b { background: var(--stamp); color: #fff; border-radius: 999px; padding: 3px 9px; font-size: 12.5px }
+.lp .pill { display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px 6px 6px; border-radius: 999px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .12); color: #E7F3EC; font-size: 14px; font-weight: 600; text-decoration: none }
+.lp .pill b { background: var(--gold); color: #0F291E; border-radius: 999px; padding: 4px 10px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase }
 .lp .stage { position: relative; margin: clamp(48px, 7vw, 76px) auto 0; max-width: 1120px }
-.lp .frame { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 0 rgba(19, 32, 26, .03), 0 40px 80px -40px rgba(19, 50, 32, .35) }
-.lp .frame .bar { height: 34px; display: flex; align-items: center; gap: 7px; padding: 0 14px; border-bottom: 1px solid var(--line); background: #FAFCFA }
-.lp .frame .bar i { width: 10px; height: 10px; border-radius: 50%; background: #DCE3DD }
+.lp .frame { background: #fff; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: 0 2px 0 rgba(19, 32, 26, .03), 0 40px 80px -40px rgba(19, 50, 32, .35) }
+.lp .frame .bar { height: 34px; display: flex; align-items: center; gap: 7px; padding: 0 14px; border-bottom: 1px solid var(--line); background: #FBF9F4 }
+.lp .frame .bar i { width: 10px; height: 10px; border-radius: 50%; background: #E6E1D3 }
+.lp .frame .bar i:first-child { background: #52B788 } .lp .frame .bar i:nth-child(2) { background: #D4A017 }
 .lp .frame img { width: 100%; height: auto }
 .lp .hero .frame { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: 0 }
 .lp .seal-float { position: absolute; right: -28px; bottom: 56px; width: min(360px, 42%); border-radius: 10px; box-shadow: 0 24px 50px -20px rgba(47, 67, 181, .45); background: #fff; transform: rotate(-2.5deg); animation: stamp-in .7s cubic-bezier(.2, 1.3, .4, 1) .35s both }
@@ -83,14 +91,14 @@ html:has(.lp), html:has(.lp) body { background: #FFFFFF; color-scheme: light }
 
 /* feature cards */
 .lp .features { display: flex; flex-direction: column; gap: 28px; margin-top: clamp(40px, 6vw, 64px) }
-.lp .feature { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); background: var(--tint); border-radius: 26px; overflow: hidden; min-height: 460px; scroll-margin-top: 90px }
+.lp .feature { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); background: #fff; border: 1px solid var(--line); box-shadow: 0 10px 30px -5px rgba(27, 67, 50, .08); border-radius: 24px; overflow: hidden; min-height: 460px; scroll-margin-top: 90px }
 .lp .feature.flip { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr) }
 .lp .feature.flip .copy { order: 2 }
 .lp .feature .copy { padding: clamp(28px, 4.5vw, 56px); display: flex; flex-direction: column; gap: 16px; justify-content: center }
 .lp .feature .copy p { color: var(--muted) }
 .lp .feature ul { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 15.5px }
 .lp .feature li { display: flex; gap: 10px; align-items: flex-start }
-.lp .feature li::before { content: ""; flex: none; width: 18px; height: 18px; margin-top: 3px; border-radius: 50%; background: var(--leaf) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%231D5A3E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat }
+.lp .feature li::before { content: ""; flex: none; width: 18px; height: 18px; margin-top: 3px; border-radius: 50%; background: var(--leaf) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%231B4332' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat }
 .lp .feature .copy .btn { align-self: flex-start; margin-top: 8px }
 .lp .feature .shot { position: relative; padding: clamp(28px, 4vw, 48px) 0 0 clamp(20px, 3vw, 40px); display: flex; align-items: flex-end; min-width: 0 }
 .lp .feature.flip .shot { padding: clamp(28px, 4vw, 48px) clamp(20px, 3vw, 40px) 0 0; justify-content: flex-end }
@@ -104,26 +112,26 @@ html:has(.lp), html:has(.lp) body { background: #FFFFFF; color-scheme: light }
 
 /* quote from the workbook */
 .lp .quote { text-align: center; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; align-items: center }
-.lp .quote blockquote { margin: 0; font-family: var(--display); font-weight: 650; font-stretch: 86%; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.18; letter-spacing: -.01em; text-wrap: balance }
+.lp .quote blockquote { margin: 0; font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.18; letter-spacing: -.01em; text-wrap: balance }
 .lp .quote cite { font-style: normal; color: var(--muted); font-size: 15px }
 .lp .quote cite b { color: var(--ink) }
 
 /* use cases */
 .lp .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: clamp(36px, 5vw, 56px) }
-.lp .card { background: #fff; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: border-color .15s, transform .15s }
+.lp .card { background: #fff; border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 10px 30px -5px rgba(27, 67, 50, .08); overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: border-color .15s, transform .15s }
 .lp .card:hover { border-color: var(--green); transform: translateY(-2px) }
 .lp .card .pic { background: var(--tint); padding: 22px 0 0 22px; height: 210px; overflow: hidden }
 .lp .card .pic img { border-radius: 10px 0 0 0; border: 1px solid var(--line); border-right: 0; border-bottom: 0; width: 150%; max-width: none }
 .lp .card .body { padding: 22px 24px 26px; display: flex; flex-direction: column; gap: 10px; flex: 1 }
-.lp .card .aud { font-size: 14px; font-weight: 600; color: var(--green) }
+.lp .card .aud { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--green-2) }
 .lp .card p { color: var(--muted); font-size: 15.5px }
 .lp .card .more { margin-top: auto; padding-top: 8px; font-weight: 600; font-size: 15px; color: var(--green) }
 
 /* facts */
-.lp .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: clamp(36px, 5vw, 56px); border-top: 1.5px solid var(--ink) }
+.lp .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: clamp(36px, 5vw, 56px); border-top: 3px solid var(--gold) }
 .lp .fact { padding: 26px 24px 0 0; display: flex; flex-direction: column; gap: 8px }
 .lp .fact + .fact { padding-left: 24px; border-left: 1px solid var(--line) }
-.lp .fact .n { font-family: var(--display); font-weight: 800; font-stretch: 75%; font-size: clamp(52px, 6vw, 76px); line-height: .9; letter-spacing: -.03em; color: var(--green); font-variant-numeric: tabular-nums }
+.lp .fact .n { font-family: var(--display); font-weight: 800; font-size: clamp(46px, 5vw, 64px); line-height: .95; letter-spacing: -.04em; color: var(--green); font-variant-numeric: tabular-nums }
 .lp .fact b { font-size: 17px }
 .lp .fact span { color: var(--muted); font-size: 15px }
 
@@ -139,40 +147,40 @@ html:has(.lp), html:has(.lp) body { background: #FFFFFF; color-scheme: light }
 
 /* reasons */
 .lp .reasons { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px; margin-top: clamp(36px, 5vw, 56px) }
-.lp .reason { grid-column: span 2; background: #fff; border: 1px solid var(--line); border-radius: var(--r); padding: 28px; display: flex; flex-direction: column; gap: 10px }
+.lp .reason { grid-column: span 2; background: #fff; border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 10px 30px -5px rgba(27, 67, 50, .06); padding: 28px; display: flex; flex-direction: column; gap: 10px }
 .lp .reason.wide { grid-column: span 3 }
 .lp .reason p { color: var(--muted); font-size: 15.5px }
-.lp .reason.lead-card { background: var(--green); border-color: var(--green); color: #fff }
+.lp .reason.lead-card { background: linear-gradient(160deg, var(--dark-2), var(--dark-3)); border-color: var(--dark-2); color: #fff }
 .lp .reason.lead-card h4, .lp .reason.lead-card p { color: #fff }
 .lp .reason.lead-card p { opacity: .85 }
-.lp .reason.lead-card .btn { align-self: flex-start; margin-top: auto; background: #fff; color: var(--green) }
-.lp .tag { font-size: 13px; font-weight: 600; color: var(--green); background: var(--leaf); align-self: flex-start; padding: 4px 10px; border-radius: 999px }
+.lp .reason.lead-card .btn { align-self: flex-start; margin-top: auto; background: linear-gradient(90deg, #D4A017, #F59E0B); color: #0F291E }
+.lp .tag { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--green); background: var(--leaf); align-self: flex-start; padding: 4px 10px; border-radius: 999px }
 
 /* faq */
 .lp .faq { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 72px); align-items: start }
 .lp .faq .sec-head { position: sticky; top: 100px }
 .lp details { border-bottom: 1px solid var(--line) }
 .lp details:first-child { border-top: 1px solid var(--line) }
-.lp summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; align-items: center; padding: 22px 0; font-family: var(--display); font-weight: 700; font-stretch: 88%; font-size: 20px }
+.lp summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; align-items: center; padding: 22px 0; font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--green) }
 .lp summary::-webkit-details-marker { display: none }
 .lp summary::after { content: ""; flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--tint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 3v10M3 8h10' fill='none' stroke='%2313201A' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/13px no-repeat; transition: transform .2s }
 .lp details[open] summary::after { transform: rotate(45deg) }
 .lp details .ans { padding: 0 48px 24px 0; color: var(--muted); display: flex; flex-direction: column; gap: 10px; font-size: 16px }
 
 /* closing */
-.lp .closing { background: var(--green); color: #fff; border-radius: 30px; padding: clamp(48px, 7vw, 88px) clamp(24px, 5vw, 64px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; position: relative; overflow: hidden }
-.lp .closing::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(180deg, transparent 0 39px, rgba(255, 255, 255, .07) 39px 40px); pointer-events: none }
+.lp .closing { background: linear-gradient(160deg, var(--dark-1), var(--dark-2) 60%, var(--dark-3)); color: #fff; border-radius: 28px; padding: clamp(48px, 7vw, 88px) clamp(24px, 5vw, 64px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; position: relative; overflow: hidden }
+.lp .closing::before { content: ""; position: absolute; inset: 0; background: radial-gradient(50% 60% at 50% 0%, rgba(82, 183, 136, .2), transparent 70%); pointer-events: none }
 .lp .closing > * { position: relative }
 .lp .closing h2 { color: #fff; max-width: 16ch }
 .lp .closing p { opacity: .85; max-width: 52ch }
-.lp .closing .btn.primary { background: #fff; color: var(--green) }
+.lp .closing .btn.primary { background: linear-gradient(90deg, #D4A017, #F59E0B); color: #0F291E }
 .lp .closing .btn.line { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .45) }
 .lp .closing .btn.line:hover { border-color: #fff }
 
 /* footer */
 .lp footer { padding: 64px 0 calc(40px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); margin-top: clamp(72px, 10vw, 120px) }
 .lp footer .cols { display: grid; grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr)); gap: 32px }
-.lp footer h5 { margin: 0 0 14px; font-size: 14px; font-weight: 600; color: var(--muted) }
+.lp footer h5 { margin: 0 0 14px; font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--green-2) }
 .lp footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 15.5px }
 .lp footer ul a { text-decoration: none }
 .lp footer ul a:hover { color: var(--green) }

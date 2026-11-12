@@ -17,6 +17,13 @@ export const users = pgTable("users", {
   email: text("email").notNull(),
   name: text("name").notNull(),
   passwordHash: text("password_hash").notNull(),
+  /** Policy version the person accepted and when (proof of consent under the NDPA 2023 and GDPR art. 7). */
+  termsVersion: text("terms_version").notNull().default(""),
+  termsAcceptedAt: timestamp("terms_accepted_at", { withTimezone: true }),
+  passwordChangedAt: timestamp("password_changed_at", { withTimezone: true }),
+  /** Consecutive failed sign-ins and the lockout they trigger. */
+  failedLogins: integer("failed_logins").notNull().default(0),
+  lockedUntil: timestamp("locked_until", { withTimezone: true }),
   createdAt: created(),
 }, (t) => [uniqueIndex("users_email_idx").on(t.email)]);
 
@@ -66,8 +73,33 @@ export const sessions = pgTable("sessions", {
   userId: uuid("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
   businessId: uuid("business_id").references(() => businesses.id, { onDelete: "set null" }),
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  /** For the idle timeout. Updated at most every few minutes. */
+  lastSeenAt: timestamp("last_seen_at", { withTimezone: true }).notNull().defaultNow(),
+  /** Shown on the account page so people can spot sessions they don't recognise. The IP is stored only as a keyed hash. */
+  userAgent: text("user_agent").notNull().default(""),
+  ipHash: text("ip_hash").notNull().default(""),
   createdAt: created(),
-});
+}, (t) => [index("sessions_user_idx").on(t.userId), index("sessions_exp_idx").on(t.expiresAt)]);
+
+/** Sign-in and sign-up attempts, keyed by a hash of the email or IP, for rate limiting. Purged after a day. */
+export const authAttempts = pgTable("auth_attempts", {
+  id: id(),
+  key: text("key").notNull(),
+  ok: boolean("ok").notNull().default(false),
+  createdAt: created(),
+}, (t) => [index("auth_attempts_key_idx").on(t.key, t.createdAt)]);
+
+/** Who did what and when, for security investigations and accountability (NDPA 2023 accountability duty, GDPR art. 5(2)). */
+export const auditLogs = pgTable("audit_logs", {
+  id: id(),
+  businessId: uuid("business_id").references(() => businesses.id, { onDelete: "set null" }),
+  userId: uuid("user_id").references(() => users.id, { onDelete: "set null" }),
+  action: text("action").notNull(),
+  target: text("target").notNull().default(""),
+  meta: jsonb("meta").$type<Record<string, unknown>>().notNull().default({}),
+  ipHash: text("ip_hash").notNull().default(""),
+  createdAt: created(),
+}, (t) => [index("audit_biz_idx").on(t.businessId, t.createdAt), index("audit_user_idx").on(t.userId, t.createdAt)]);
 
 export const invites = pgTable("invites", {
   id: id(),
