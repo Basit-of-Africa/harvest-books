@@ -1,6 +1,7 @@
 import "server-only";
 import { constants, createCipheriv, createDecipheriv, publicEncrypt, randomBytes } from "node:crypto";
 import type { NrsPayload } from "./core";
+import { assertPublicHttpsUrl } from "@/lib/net";
 
 /**
  * Pluggable NRS connection. Each business picks a provider in setup; credentials are stored encrypted.
@@ -85,8 +86,10 @@ async function http(c: NrsCredentials, method: string, pathKey: string, body: un
   const path = (c.paths?.[pathKey] ?? MBS_PATHS[pathKey]).replace("{irn}", encodeURIComponent(irn));
   const url = c.baseUrl.replace(/\/$/, "") + path;
   try {
+    await assertPublicHttpsUrl(url);
     const res = await fetch(url, {
       method,
+      redirect: "error",
       headers: { "content-type": "application/json", accept: "application/json", "x-api-key": c.apiKey, "x-api-secret": c.apiSecret },
       body: body === undefined ? undefined : JSON.stringify(body),
       signal: AbortSignal.timeout(30_000),

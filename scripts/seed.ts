@@ -9,9 +9,10 @@ import { getDb, schema } from "../src/db";
 import { seedChart } from "../src/lib/accounts";
 import { postBookRecord, postOpening } from "../src/lib/posting";
 import { calcInvoice } from "../src/lib/nrs/core";
+import { POLICY_VERSION } from "../src/lib/brand";
 
-const EMAIL = process.env.SEED_EMAIL ?? "demo@harvestbooks.ng";
-const PASSWORD = process.env.SEED_PASSWORD ?? "harvest-demo-2026";
+const EMAIL = process.env.SEED_EMAIL ?? "demo@farmtrace.ng";
+const PASSWORD = process.env.SEED_PASSWORD ?? "farmtrace-demo-2026";
 
 async function main() {
   const db = getDb();
@@ -20,7 +21,7 @@ async function main() {
   const pack = JSON.parse(readFileSync("data/sample-books.json", "utf8"));
 
   await db.transaction(async (tx) => {
-    const [u] = await tx.insert(schema.users).values({ email: EMAIL, name: "Demo Owner", passwordHash: await bcrypt.hash(PASSWORD, 12) }).returning();
+    const [u] = await tx.insert(schema.users).values({ email: EMAIL, name: "Demo Owner", passwordHash: await bcrypt.hash(PASSWORD, 12), termsVersion: POLICY_VERSION, termsAcceptedAt: new Date(), passwordChangedAt: new Date() }).returning();
     const [b] = await tx.insert(schema.businesses).values({
       name: "Demo Agro Farms", email: EMAIL, city: "Osogbo", state: "Osun", country: "NG",
       description: "Maize and soybean production", cashOpening: pack.settings.cashOpening, pettyFloat: pack.settings.pettyFloat, cashOpeningDate: "2026-01-01",

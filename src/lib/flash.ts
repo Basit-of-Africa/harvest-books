@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { publicMessage } from "@/lib/security";
 
 /** Redirect back with a one-line message the page shows at the top. */
 export function back(path: string, kind: "ok" | "err", message: string, extra: Record<string, string> = {}): never {
@@ -18,6 +19,6 @@ export async function attempt<T>(fn: () => Promise<T>): Promise<{ ok: true; valu
   catch (e: any) {
     if (e?.digest?.startsWith?.("NEXT_REDIRECT") || e?.message === "NEXT_REDIRECT") throw e;
     console.error(e);
-    return { ok: false, error: e?.message ? String(e.message) : "Something went wrong. Try again." };
+    return { ok: false, error: publicMessage(e) };
   }
 }

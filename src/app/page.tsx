@@ -1,24 +1,19 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import { Sprout } from "lucide-react";
 import { getCtx } from "@/lib/auth";
 import "./landing.css";
 
 export const metadata: Metadata = {
-  title: { absolute: "Harvest Books: bookkeeping and NRS e-invoicing for agribusiness" },
+  title: { absolute: "FarmTrace: farm bookkeeping and NRS e-invoicing" },
   description: "Keep your farm's cash book, sales, purchases, payroll and debtors in one place, and send every invoice through NRS e-invoicing with its IRN and QR code.",
 };
-export const viewport: Viewport = { colorScheme: "light", themeColor: "#FFFFFF" };
+export const viewport: Viewport = { colorScheme: "light", themeColor: "#0F291E" };
 
 const SIGNUP = "/signup";
 
 function Mark() {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true">
-      <rect width="32" height="32" rx="9" fill="#1D5A3E" />
-      <path d="M9 9h14M9 14h14M9 19h9" stroke="#fff" strokeOpacity=".35" strokeWidth="1.6" strokeLinecap="round" />
-      <path d="M16 25c0-6 3.5-9.5 8-10.5-.6 5.4-3.6 9.2-8 10.5Zm0 0c0-4.6-2.6-7.4-6-8.2.4 4.2 2.7 7.2 6 8.2Z" fill="#9FD7B5" />
-    </svg>
-  );
+  return <span className="logo" aria-hidden="true"><Sprout /></span>;
 }
 
 const Icon = {
@@ -55,7 +50,7 @@ const FEATURES = [
   },
   {
     id: "einvoicing", eyebrow: "NRS e-invoicing", title: "Invoices NRS signs, not just accepts.", nrs: true,
-    body: "Create the invoice, and Harvest Books checks it against the NRS e-invoice fields, gives it an IRN, sends it for signing and prints the QR code on it. Paid or part-paid, the status goes back to NRS too.",
+    body: "Create the invoice, and FarmTrace checks it against the NRS e-invoice fields, gives it an IRN, sends it for signing and prints the QR code on it. Paid or part-paid, the status goes back to NRS too.",
     points: ["IRN built from your invoice number and Service ID", "Validate, sign and transmit from one page", "Branded PDF with the NRS seal, sent by email"],
     img: "/marketing/invoice.jpg", alt: "Signed invoice with the NRS QR code, IRN and submission steps",
   },
@@ -80,13 +75,14 @@ const FEATURES = [
 ];
 
 const FAQ: [string, React.ReactNode][] = [
-  ["What is Harvest Books?", <><p>An online bookkeeping app for farms and agribusinesses. It keeps the nine books of a simple bookkeeping pack (cash book, sales, purchases, petty cash, inventory, payroll, asset register, debtors and creditors) with a double-entry journal underneath, and it issues invoices in the NRS e-invoicing format.</p></>],
+  ["What is FarmTrace?", <><p>An online bookkeeping app for farms and agribusinesses. It keeps the nine books of a simple bookkeeping pack (cash book, sales, purchases, petty cash, inventory, payroll, asset register, debtors and creditors) with a double-entry journal underneath, and it issues invoices in the NRS e-invoicing format.</p></>],
   ["Does it connect to NRS directly?", <><p>Yes. Each business chooses its connection in setup: directly to the NRS e-invoicing service with the API key and secret from your NRS profile, or through your Access Point Provider. Until you add credentials, a built-in sandbox lets you try the whole flow; sandbox invoices are clearly marked as not valid for tax.</p></>],
-  ["Does my business have to use e-invoicing?", <><p>NRS is rolling e-invoicing out to taxpayers in stages. Check with NRS or your tax adviser whether and when your business is in scope. Harvest Books works either way: the books stand on their own, and e-invoicing is there when you need it.</p></>],
+  ["Does my business have to use e-invoicing?", <><p>NRS is rolling e-invoicing out to taxpayers in stages. Check with NRS or your tax adviser whether and when your business is in scope. FarmTrace works either way: the books stand on their own, and e-invoicing is there when you need it.</p></>],
   ["How is VAT handled for farm produce?", <><p>Every invoice line has a tax category: standard VAT at 7.5%, zero-rated or exempt. Many unprocessed agricultural products are zero-rated or exempt, so you set the category per product and confirm the treatment with your tax adviser. The summary shows output VAT, input VAT and the net amount for any period.</p></>],
   ["Can I move over from my spreadsheet?", <><p>Yes. The books follow the same columns and formulas as the Simple Bookkeeping Pack. Enter your opening cash balance and petty cash float, add debtors and creditors brought forward, and carry on from there. Every book exports back to CSV whenever you want it.</p></>],
   ["Can my accountant work in the books with me?", <><p>Yes. Invite them as an accountant to post entries and sign invoices, or as a viewer to read only. Only owners can change setup and NRS credentials.</p></>],
-  ["How are my NRS credentials kept safe?", <><p>API keys and secrets are encrypted before they are stored and are never sent back to the browser. Every call to NRS is logged on the invoice, with secrets removed from the log.</p></>],
+  ["How are my NRS credentials kept safe?", <><p>API keys and secrets are encrypted with AES-256 before they are stored and are never sent back to the browser. Every call to NRS is logged on the invoice, with secrets removed from the log.</p></>],
+  ["How do you protect my data and my staff's data?", <><p>FarmTrace follows the Nigeria Data Protection Act 2023 and the GDPR. Connections are encrypted, passwords are hashed, sign-in attempts are rate-limited and every sensitive action is recorded in an audit log. We use no advertising or tracking cookies and never sell data.</p><p>You can download everything held about you, or close your account, from the Privacy and security page at any time. Read the <Link href="/privacy">Privacy Policy</Link> for the details.</p></>],
 ];
 
 export default async function Landing() {
@@ -99,7 +95,7 @@ export default async function Landing() {
     <div className="lp">
       <header className="topbar">
         <div className="wrap">
-          <Link href="/" className="mark" aria-label="Harvest Books home"><Mark />Harvest Books</Link>
+          <Link href="/" className="mark" aria-label="FarmTrace home"><Mark />FarmTrace</Link>
           <nav aria-label="Sections"><ul>
             <li><a href="#product">Product</a></li>
             <li><a href="#einvoicing">E-invoicing</a></li>
@@ -117,14 +113,14 @@ export default async function Landing() {
         <div className="hero">
           <div className="wrap">
             <a className="pill" href="#einvoicing"><b>New</b>NRS e-invoicing built in</a>
-            <h1>Farm books that keep you ready for NRS.</h1>
-            <p className="lead">Harvest Books turns your cash book, sales book and the rest of the bookkeeping pack into one simple app, and sends every invoice through NRS e-invoicing with its IRN and QR code.</p>
+            <h1>Farm books that keep you <em>ready for NRS.</em></h1>
+            <p className="lead">FarmTrace turns your cash book, sales book and the rest of the bookkeeping pack into one simple app, and sends every invoice through NRS e-invoicing with its IRN and QR code.</p>
             <div className="ctas">
-              <Link className="btn primary" href={startHref}>{startLabel}</Link>
+              <Link className="btn gold" href={startHref}>{startLabel}</Link>
               <a className="btn line" href="#einvoicing">See how e-invoicing works</a>
             </div>
             <div className="stage">
-              <Shot src="/marketing/dashboard.jpg" alt="Harvest Books monthly summary showing cash at bank, sales, purchases, profit and a monthly cash chart" />
+              <Shot src="/marketing/dashboard.jpg" alt="FarmTrace monthly summary showing cash at bank, sales, purchases, profit and a monthly cash chart" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className="seal-float" src="/marketing/seal.png" alt="NRS e-invoice seal with QR code, IRN and CSID" width={880} height={300} />
             </div>
@@ -171,7 +167,7 @@ export default async function Landing() {
           <div className="wrap quote">
             <span className="eyebrow">Where it started</span>
             <blockquote>&ldquo;Start with the cash book, sales book and purchases book. These alone will show whether the business is making money.&rdquo;</blockquote>
-            <cite><b>The Simple Bookkeeping Pack</b>, the spreadsheet Harvest Books is built on</cite>
+            <cite><b>The Simple Bookkeeping Pack</b>, the spreadsheet FarmTrace is built on</cite>
           </div>
         </section>
 
@@ -239,7 +235,7 @@ export default async function Landing() {
         <section className="tint">
           <div className="wrap">
             <div className="sec-head">
-              <span className="eyebrow">Why Harvest Books</span>
+              <span className="eyebrow">Why FarmTrace</span>
               <h2>You run the farm. We keep the books straight.</h2>
             </div>
             <div className="reasons">
@@ -247,7 +243,7 @@ export default async function Landing() {
               <div className="reason wide"><span className="tag">Nigeria first</span><h4>Made for how Nigerian farms trade</h4><p>Naira throughout, TIN and +234 numbers, 7.5% VAT with zero-rated produce, and NRS e-invoicing built in rather than bolted on.</p></div>
               <div className="reason"><h4>Double entry, quietly</h4><p>Each entry posts balanced debits and credits. The trial balance tells you the moment anything is off.</p></div>
               <div className="reason"><h4>Locked-down credentials</h4><p>NRS keys are encrypted at rest and only the owner can see or change the connection.</p></div>
-              <div className="reason"><h4>Your data stays yours</h4><p>Export any book to CSV and any invoice to PDF, whenever you like.</p></div>
+              <div className="reason"><h4>Your data stays yours</h4><p>Export any book to CSV, any invoice to PDF, or all your data at once. NDPA and GDPR rights built in.</p></div>
             </div>
           </div>
         </section>
@@ -280,12 +276,12 @@ export default async function Landing() {
       <footer>
         <div className="wrap">
           <div className="cols">
-            <div className="about"><Link href="/" className="mark"><Mark />Harvest Books</Link><p>Bookkeeping and NRS e-invoicing for Nigerian farms and agribusinesses.</p></div>
+            <div className="about"><Link href="/" className="mark"><Mark />FarmTrace</Link><p>Bookkeeping and NRS e-invoicing for Nigerian farms and agribusinesses.</p></div>
             <div><h5>Product</h5><ul><li><a href="#cash">Cash book</a></li><li><a href="#sales">Sales and purchases</a></li><li><a href="#einvoicing">E-invoicing</a></li><li><a href="#debtors">Debtors and creditors</a></li><li><a href="#team">Team</a></li></ul></div>
             <div><h5>Account</h5><ul><li><Link href="/login">Sign in</Link></li><li><Link href={SIGNUP}>Create an account</Link></li></ul></div>
-            <div><h5>Resources</h5><ul><li><a href="#faq">FAQ</a></li><li><a href="https://einvoice.nrs.gov.ng/docs/introduction?version=1.1" target="_blank" rel="noreferrer">NRS e-invoicing documentation</a></li></ul></div>
+            <div><h5>Resources</h5><ul><li><a href="#faq">FAQ</a></li><li><a href="https://einvoice.nrs.gov.ng/docs/introduction?version=1.1" target="_blank" rel="noopener noreferrer">NRS e-invoicing documentation</a></li><li><Link href="/privacy">Privacy Policy</Link></li><li><Link href="/terms">Terms of Service</Link></li><li><Link href="/privacy#cookies">Cookies</Link></li></ul></div>
           </div>
-          <div className="base"><span>© 2026 Harvest Books. All rights reserved.</span><span>Made for agribusiness in Nigeria</span></div>
+          <div className="base"><span>© 2026 FarmTrace. All rights reserved.</span><span>Made for agribusiness in Nigeria · NDPA 2023 and GDPR aligned</span></div>
         </div>
       </footer>
     </div>

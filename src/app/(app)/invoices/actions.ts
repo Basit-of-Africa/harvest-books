@@ -12,6 +12,7 @@ import { invoicePdf } from "@/lib/pdf";
 import { mailConfigured, sendMail } from "@/lib/mail";
 import { KIND_LABEL } from "@/lib/nrs/core";
 import { removeInvoicePosting } from "@/lib/posting";
+import { audit, type AuditAction } from "@/lib/security";
 
 const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 const Draft = z.object({
@@ -82,6 +83,8 @@ export async function nrsAction(fd: FormData) {
       default: return { ok: false, message: "Unknown step." };
     }
   });
+  const logged: Record<string, AuditAction> = { validate: "invoice.validated", sign: "invoice.signed", record: "invoice.signed", transmit: "invoice.transmitted" };
+  if (res.ok && res.value.ok && logged[step]) await audit({ action: logged[step], userId: ctx.user.id, businessId: ctx.business.id, target: inv.id, meta: { number: inv.number } });
   finish(inv.id, res.ok ? res.value : { ok: false, message: res.error });
 }
 
@@ -98,6 +101,7 @@ export async function deleteInvoice(fd: FormData) {
     await removeInvoicePosting(tx, ctx.business.id, inv.id);
     await tx.delete(schema.invoices).where(and(eq(schema.invoices.id, inv.id), eq(schema.invoices.businessId, ctx.business.id)));
   });
+  await audit({ action: "invoice.deleted", userId: ctx.user.id, businessId: ctx.business.id, target: inv.id, meta: { number: inv.number } });
   revalidatePath("/", "layout");
   back("/invoices", "ok", `${inv.number} deleted.`);
 }
@@ -106,7 +110,7 @@ export async function emailInvoice(fd: FormData) {
   const { ctx, inv } = await load(fd);
   const to = str(fd, "to");
   if (!mailConfigured()) back(`/invoices/${inv.id}`, "err", "Email is not set up on this server. See the README for the SMTP settings.");
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(to)) back(`/invoices/${inv.id}`, "err", "Enter a valid email address.");
+  if (to.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(to)) back(`/invoices/${inv.id}`, "err", "Enter a valid email address.");
   const res = await attempt(async () => {
     const pdf = await invoicePdf(ctx.business, inv);
     const label = KIND_LABEL[inv.kind];
@@ -120,6 +124,7 @@ export async function emailInvoice(fd: FormData) {
     await db.update(schema.invoices).set({ emailedAt: new Date() }).where(eq(schema.invoices.id, inv.id));
   });
   if (!res.ok) back(`/invoices/${inv.id}`, "err", `The email was not sent: ${res.error}`);
+  await audit({ action: "invoice.emailed", userId: ctx.user.id, businessId: ctx.business.id, target: inv.id, meta: { number: inv.number } });
   back(`/invoices/${inv.id}`, "ok", `Sent to ${to}.`);
 }
 
